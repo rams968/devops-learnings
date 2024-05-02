@@ -14,6 +14,7 @@ __pycache__/
 build/
 dist/
 downloads/
+*.pyc
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -22,3 +23,9 @@ downloads/
 .python-version
 
 # Terraform
+.terraform/*
+.terraform*
+terraform.*
+
+# Environment
+.venv/
