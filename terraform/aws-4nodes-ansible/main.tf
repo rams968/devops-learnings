@@ -9,7 +9,9 @@ provider "aws" {
 # Ansible-SG to create 4 EC2 instances: 1 AWS instance for control node,
 # 1 AWS instance, 1 Ubuntu instance, and 1 CentOS instance for total of
 # 3 ansible managed nodes
-#
+# This configuration is used by Terraform to setup nodes to learn and practice
+# Ansible. Add private ip for each node, to avoid update inventory for
+# ansible after teardown/restart 4 nodes.
 
 # Creates EC2 Instance - control node
 resource "aws_instance" "Ansible_control_node" {
@@ -19,6 +21,7 @@ resource "aws_instance" "Ansible_control_node" {
   associate_public_ip_address = true
 
   key_name        = "Ansible"
+  private_ip = "172.31.24.131"
   security_groups = ["Ansible-SG", ]
   vpc_security_group_ids = [
     "sg-0772870c81513785b"
@@ -36,6 +39,7 @@ resource "aws_instance" "Ansible_Amazon_managed_node" {
     instance_type = "t2.micro"
 
     key_name        = "Ansible"
+    private_ip = "172.31.30.53"
     security_groups = [ "Ansible-SG", ]
     vpc_security_group_ids = [
         "sg-0772870c81513785b",
@@ -58,6 +62,7 @@ resource "aws_instance" "Ansible_centos_managed_node" {
         "sg-0772870c81513785b",
     ]
     associate_public_ip_address = true
+    private_ip = "172.31.28.44"
 
     tags = {
         Name = "centos_managed_node"
@@ -75,6 +80,7 @@ resource "aws_instance" "Ansible_ubuntu_managed_node" {
         "sg-0772870c81513785b",
     ]
     associate_public_ip_address = true
+    private_ip = "172.31.23.1"
 
     tags = {
         Name = "ubuntu_managed_node"
